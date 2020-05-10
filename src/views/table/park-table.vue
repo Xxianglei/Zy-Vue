@@ -20,7 +20,8 @@
     <el-table
       :data="list"
       style="width: 100%"
-      :default-sort="{prop: 'flowId', order: 'ascending'}"
+      height="510"
+      :default-sort = "{prop: 'parkNo', order: 'descending'}"
       :row-class-name="tableRowClassName"
       @row-click="getParkinfo">
       <el-table-column
@@ -31,6 +32,7 @@
       <el-table-column
         prop="volume"
         label="容量"
+        sortable
         width="140px">
       </el-table-column>
       <el-table-column
@@ -51,16 +53,19 @@
       <el-table-column
         prop="bPrice"
         label="白天价格"
+        sortable
         width="140px">
       </el-table-column>
       <el-table-column
         prop="yPrice"
         label="夜间价格"
+        sortable
         width="140px">
       </el-table-column>
       <el-table-column
         prop="vPrice"
         label="会员折扣"
+        sortable
         :formatter="formatVip"
         width="140px">
       </el-table-column>
@@ -263,7 +268,7 @@
         }).then(() => {
           rows.splice(index, 1)
           deletePark(id).then(resp => {
-            if (resp.code === 200) {
+            if (resp.code == 200) {
               this.$message({
                 message: '删除成功',
                 type: 'success'

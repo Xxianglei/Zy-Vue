@@ -74,6 +74,8 @@
     <el-table
       :data="list"
       style="width: 100%"
+      height="510"
+      :default-sort="{prop: 'parkNo', order: 'descending'}"
       :row-class-name="tableRowClassName"
       @selection-change="handleSelectionChange"
     >
@@ -107,6 +109,7 @@
       <el-table-column
         prop="age"
         label="年龄"
+        sortable
         width="140px"
         :formatter="showAge"
       />
@@ -120,12 +123,14 @@
         prop="vip"
         label="会员"
         width="140px"
+        sortable
         :formatter="showVip"
       />
       <el-table-column
         prop="status"
         label="在线"
         width="140px"
+        sortable
         :formatter="showOnline"
       />
       <el-table-column
@@ -421,7 +426,7 @@
           this.list = json
         })
       }, findOnlyRoot() {
-        var data=this.thedata={ isSuperUser: '1'}
+        var data = this.thedata = { isSuperUser: '1' }
         findAllUser(data).then(resp => {
           var json = resp.data
           this.formatDate(json)
@@ -490,7 +495,7 @@
           type: 'warning'
         }).then(() => {
           rows.splice(index, 1)
-          deleteUser({ flowId: id }).then(resp => {
+          deleteUser(id).then(resp => {
             if (resp.data === 1) {
               this.$message({
                 message: '删除成功',

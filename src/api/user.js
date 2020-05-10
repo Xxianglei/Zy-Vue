@@ -73,9 +73,8 @@ export function addUser(data) {
 // 按flowid删除人员信息
 export function deleteUser(data) {
   return request({
-    url: '/apigateway/common/manager/deleteUser.json',
-    method: 'post',
-    data
+    url: '/apigateway/common/manager/deleteUser.json?flowId=' + data,
+    method: 'get'
   })
 }
 
@@ -99,9 +98,18 @@ export function updateUser(data) {
 
 // 查询订单
 export function findOrder(data) {
-	console.log(data)
+  console.log(data)
   return request({
     url: '/apigateway/reserve/back/viewOrder.json?parkName=' + data,
+    method: 'get'
+  })
+}
+
+// 删除订单
+export function deleteOrder(data) {
+  console.log(data)
+  return request({
+    url: '/apigateway/reserve/back/deleteOrder.json?flowId=' + data,
     method: 'get'
   })
 }
@@ -141,10 +149,11 @@ export function updatePark(data) {
     data
   })
 }
+
 export function findParksByName(data) {
   console.log(data)
   return request({
-    url: '/apigateway/parking/back/getParksByName.json?parkName='+data,
+    url: '/apigateway/parking/back/getParksByName.json?parkName=' + data,
     method: 'get'
   })
 }
@@ -168,7 +177,7 @@ export function addParkInfo(data) {
 
 //根据车位id删除车位
 export function deleteParkInfo(data) {
-	console.log(data)
+  console.log(data)
   return request({
     url: '/apigateway/parking/back/deleteParkInfo.json?parkInfoFlowId=' + data,
     method: 'get'

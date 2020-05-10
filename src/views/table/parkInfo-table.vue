@@ -15,21 +15,26 @@
     <el-table
       :data="list"
       style="width: 100%"
+      height="520"
+      :default-sort = "{prop: 'parkNo', order: 'descending'}"
       :row-class-name="tableRowClassName">
       <el-table-column
         prop="parkNum"
         label="车位编号"
+        sortable
         width="420px">
       </el-table-column>
       <el-table-column
         prop="length"
         label="车位长度"
         :formatter="formatLength"
+        sortable
         width="420px">
       </el-table-column>
       <el-table-column
         prop="width"
         label="车位宽度"
+        sortable
         :formatter="formatWidth"
         width="420px">
       </el-table-column>
