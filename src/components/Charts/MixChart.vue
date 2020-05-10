@@ -46,15 +46,15 @@ export default {
       this.chart = echarts.init(document.getElementById(this.id))
       const xData = (function() {
         const data = []
-        for (let i = 1; i < 13; i++) {
-          data.push(i + 'month')
+        for (let i = 1; i < 11; i++) {
+          data.push(i + 'Day')
         }
         return data
       }())
       this.chart.setOption({
         backgroundColor: '#344b58',
         title: {
-          text: 'statistics',
+          text: '最近十天订单生成量',
           x: '20',
           top: '20',
           textStyle: {
@@ -90,7 +90,7 @@ export default {
           textStyle: {
             color: '#90979c'
           },
-          data: ['female', 'male', 'average']
+          data: ['男性', '女性', '总量']
         },
         calculable: true,
         xAxis: [{
@@ -162,7 +162,7 @@ export default {
           end: 35
         }],
         series: [{
-          name: 'female',
+          name: '男性',
           type: 'bar',
           stack: 'total',
           barMaxWidth: 35,
@@ -199,7 +199,7 @@ export default {
         },
 
         {
-          name: 'male',
+          name: '女性',
           type: 'bar',
           stack: 'total',
           itemStyle: {
@@ -230,7 +230,7 @@ export default {
             220
           ]
         }, {
-          name: 'average',
+          name: '总量',
           type: 'line',
           stack: 'total',
           symbolSize: 10,

@@ -64,7 +64,31 @@ export default {
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['00:00',
+            '01:00',
+            '02:00',
+            '03:00',
+            '04:00',
+            '05:00',
+            '06:00',
+            '07:00',
+            '08:00',
+            '09:00',
+            '10:00',
+            '11:00',
+            '12:00',
+            '13:00',
+            '14:00',
+            '15:00',
+            '16:00',
+            '17:00',
+            '18:00',
+            '19:00',
+            '20:00',
+            '21:00',
+            '22:00',
+            '23:00',
+            '24:00'],
           boundaryGap: false,
           axisTick: {
             show: false
@@ -90,14 +114,14 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: ['订单量']
         },
         series: [{
-          name: 'expected', itemStyle: {
+          name: '订单量', itemStyle: {
             normal: {
-              color: '#FF005A',
+              color: '#5aa9ee',
               lineStyle: {
-                color: '#FF005A',
+                color: '#5aa9ee',
                 width: 2
               }
             }
@@ -107,26 +131,6 @@ export default {
           data: expectedData,
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
-        },
-        {
-          name: 'actual',
-          smooth: true,
-          type: 'line',
-          itemStyle: {
-            normal: {
-              color: '#3888fa',
-              lineStyle: {
-                color: '#3888fa',
-                width: 2
-              },
-              areaStyle: {
-                color: '#f3f8ff'
-              }
-            }
-          },
-          data: actualData,
-          animationDuration: 2800,
-          animationEasing: 'quadraticOut'
         }]
       })
     }

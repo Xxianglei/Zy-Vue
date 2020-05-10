@@ -53,20 +53,18 @@
           legend: {
             left: 'center',
             bottom: '10',
-            data: ['男性用户', '女性用户','普通用户','会员用户']
+            data: ['剩余量', '使用量']
           },
           series: [
             {
-              name: '使用用户比例图',
+              name: '当天停车位使用情况',
               type: 'pie',
               roseType: 'radius',
               radius: [15, 95],
-              center: ['50%', '45%','30','38'],
+              center: ['50%', '45%'],
               data: [
-                { value: 320, name: '男性用户' },
-                { value: 240, name: '女性用户' },
-                { value: 14, name: '普通用户' },
-                { value: 254, name: '会员用户' }
+                { value: 320, name: '剩余量' },
+                { value: 240, name: '使用量' }
               ],
               animationEasing: 'cubicInOut',
               animationDuration: 2600

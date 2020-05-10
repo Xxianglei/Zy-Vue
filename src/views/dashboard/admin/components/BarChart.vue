@@ -62,7 +62,7 @@ export default {
         },
         xAxis: [{
           type: 'category',
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: ['第十', '第九', '第八', '第七', '第六', '第五', '第四',  '第三', '第二' ,'第一'],
           axisTick: {
             alignWithLabel: true
           }
@@ -74,25 +74,11 @@ export default {
           }
         }],
         series: [{
-          name: 'pageA',
+          name: '停车场名字',
           type: 'bar',
           stack: 'vistors',
-          barWidth: '60%',
+          barWidth: '70%',
           data: [79, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageB',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [80, 52, 200, 334, 390, 330, 220],
-          animationDuration
-        }, {
-          name: 'pageC',
-          type: 'bar',
-          stack: 'vistors',
-          barWidth: '60%',
-          data: [30, 52, 200, 334, 390, 330, 220],
           animationDuration
         }]
       })
