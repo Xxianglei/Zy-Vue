@@ -220,6 +220,7 @@
           password:'',
           superRoot:''
         },
+       
         formLabelWidth: '80px',
         orderList:[],
         editList:[],
