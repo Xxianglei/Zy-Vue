@@ -116,9 +116,16 @@ export function updatePark(data) {
 }
 
 //停车位信息
+<<<<<<< HEAD
 export function getParkInfoList(data) {
   return request({
     url: '/apigateway/parking/back/getParkInfoList.json?flowId='+data,
+=======
+export function getParkInfoList() {
+  console.log(data)
+  return request({
+    url: '/apigateway/parking/back/getParkInfoList.json',
+>>>>>>> 44e40693da2d3fb62749c2f10429c12fc01487ad
     method: 'get'
   })
 }
