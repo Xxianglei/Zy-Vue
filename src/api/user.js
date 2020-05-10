@@ -141,6 +141,13 @@ export function updatePark(data) {
     data
   })
 }
+export function findParksByName(data) {
+  console.log(data)
+  return request({
+    url: '/apigateway/parking/back/getParksByName.json?parkName='+data,
+    method: 'get'
+  })
+}
 
 //停车位信息
 export function getParkInfoList(data) {
