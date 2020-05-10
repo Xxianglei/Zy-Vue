@@ -14,13 +14,6 @@
           @click="dialogFormVisible = true">
           Add
         </el-button>
-        <el-button class="filter-item" 
-          style="margin-left: 10px;" 
-          type="primary" 
-          icon="el-icon-delete"
-          @click="batchDelete">
-          Delete
-        </el-button>
       <!-- </template> -->
     </div>
 
@@ -29,13 +22,7 @@
     style="width: 100%"
     :default-sort = "{prop: 'flowId', order: 'ascending'}"
     :row-class-name="tableRowClassName"
-    @selection-change="handleSelectionChange"
     @row-click="getParkinfo">
-    <el-table-column
-      prop="flowId"
-      label="ID"
-      width="100px">
-    </el-table-column>
     <el-table-column
       prop="bPrice"
       label="Price"
@@ -48,12 +35,12 @@
     </el-table-column>
     <el-table-column
       prop="jd"
-      label="jd"
+      label="经度"
       width="90px">
     </el-table-column>
     <el-table-column
       prop="wd"
-      label="wd"
+      label="纬度"
       width="90px">
     </el-table-column>
     <el-table-column
@@ -92,13 +79,12 @@
       <template slot-scope="scope">
         <el-button class="icon-edit"  type="primary" icon="el-icon-edit" circle @click="handleEdit(scope.$index, scope.row)"></el-button>
         <el-button type="danger" icon="el-icon-delete" circle @click.native.prevent="deleteRow(scope.$index, list,scope.row.flowId)"></el-button>
-        <el-button type="success" icon="el-icon-circle-plus-outline" circle @click="dialogFormVisible = true"></el-button>
       </template>
     </el-table-column>
   </el-table>
 
     <!-- 点击增加打开的表单 -->
-    <el-dialog title="增加用户" :visible.sync="dialogFormVisible" width="500px" top="30px">
+    <el-dialog title="增加停车场" :visible.sync="dialogFormVisible" width="500px" top="30px">
       <!-- 添加新的用户 -->
       <el-form :model="addForm" :rules="rules" ref="addForm" label-width="100px" class="demo-addForm">
         <el-form-item label="parkName" prop="parkName">
@@ -137,7 +123,7 @@
 
     <!-- 编辑的表单 -->
     <el-dialog title="修改用户资料" :visible.sync="dialogTableVisible"  width="500px" top="30px">
-      <!-- 添加新的用户 -->
+      <!-- 添加新的停车场 -->
       <el-form :model="editForm" :rules="rules"  ref="editForm" label-width="100px" class="demo-addForm">
         <el-form-item label="parkName" prop="parkName">
           <el-input v-model="editForm.parkName"></el-input>
@@ -163,11 +149,8 @@
         <el-form-item label="wd" prop="wd">
           <el-input v-model="editForm.wd"></el-input>
         </el-form-item>
-        <el-form-item label="id" prop="id">
-          <el-input v-model="editForm.flowId"></el-input>
-        </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="editUser('editForm')">立即修改</el-button>
+          <el-button type="primary" @click="editPark('editForm')">立即修改</el-button>
           <el-button @click="cancelButton('editForm')">取消</el-button>
         </el-form-item>
       </el-form>
@@ -193,32 +176,13 @@
 </style>
 
 <script>
-import { findAllUser,findUser,addUser,deleteUser,batchDeleteUser,updateUser,findPark,addPark,deletePark,updatePark} from '@/api/user'
+import { findPark,addPark,deletePark,updatePark} from '@/api/user'
 import axios from 'axios'
   export default {
      data() {
       return {
-        addForm: {
-          name: '',
-          age: '',
-          sexy: '',
-          phone:'',
-          vip:'',
-          account:'',
-          password:'',
-          superRoot:''
-        },
-        editForm :{
-          flowId:'',
-          name: '',
-          age: '',
-          sexy: '',
-          phone:'',
-          vip:'',
-          account:'',
-          password:'',
-          superRoot:''
-        },
+        addForm: {},
+        editForm :{},
         // 表单验证规则
         rules: {  
           name: [
@@ -243,24 +207,9 @@ import axios from 'axios'
         },
         dialogTableVisible: false,
         dialogFormVisible: false,
-        form: {
-          name: '',
-          age: '',
-          sexy: '',
-          phone:'',
-          vip:'',
-          account:'',
-          password:'',
-          superRoot:''
-        },
         formLabelWidth: '80px',
         list:[],
-        editList:[],
-        thedata:{
-          isSuperUser:0,
-        },
-        idSearch:'',
-        batchId:''
+        idSearch:''
       }
     },
     created(){
@@ -308,8 +257,9 @@ import axios from 'axios'
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-      //按指定id删除人员信息
+      //按指定id删除停车场
       deleteRow(index, rows ,id) {
+      	event.stopPropagation();
         this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -334,9 +284,10 @@ import axios from 'axios'
       handleEdit(index, row) {
         this.dialogTableVisible=true,
         this.editForm = Object.assign({}, row);
+        event.stopPropagation();
       },
-      // 修改用户的资料
-      editUser(){
+      // 修改停车场的资料
+      editPark(){
         updatePark(
           this.editForm
           ).then(resp=>{
@@ -366,33 +317,6 @@ import axios from 'axios'
             this.dialogTableVisible=true,
             this.editForm = Object.assign({}, resp.data);
           })
-      },
-      handleSelectionChange(val) {
-        this.batchId=val.map(item=>item.flowId);
-      },
-      batchDelete(){
-        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          batchDeleteUser(
-          {list:this.batchId}
-          ).then(resp=>{
-            if(resp.code===200){
-              this.$message({
-                message: '删除成功',
-                type: 'success'
-              }),
-              this.getList()
-            }
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
       }
     }
   }

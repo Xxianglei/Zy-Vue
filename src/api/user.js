@@ -99,8 +99,9 @@ export function updateUser(data) {
 
 // 查询订单
 export function findOrder(data) {
+	console.log(data)
   return request({
-    url: '/apigateway/pay/back/viewOrder.json?parkName=' + data,
+    url: '/apigateway/reserve/back/viewOrder.json?parkName=' + data,
     method: 'get'
   })
 }
@@ -135,7 +136,7 @@ export function deletePark(data) {
 export function updatePark(data) {
   console.log(data)
   return request({
-    url: 'apigateway/parking/back/updatePark.json',
+    url: '/apigateway/parking/back/updatePark.json',
     method: 'post',
     data
   })
@@ -146,5 +147,32 @@ export function getParkInfoList(data) {
   return request({
     url: '/apigateway/parking/back/getParkInfoList.json?flowId=' + data,
     method: 'get'
+  })
+}
+
+//根据停车场id新增车位
+export function addParkInfo(data) {
+  return request({
+    url: '/apigateway/parking/back/addParkInfo.json',
+    method: 'post',
+    data
+  })
+}
+
+//根据车位id删除车位
+export function deleteParkInfo(data) {
+	console.log(data)
+  return request({
+    url: '/apigateway/parking/back/deleteParkInfo.json?parkInfoFlowId=' + data,
+    method: 'get'
+  })
+}
+
+//根据车位id修改车位大小
+export function updateParkInfo(data) {
+  return request({
+    url: '/apigateway/parking/back/updateParkInfo.json',
+    method: 'post',
+    data
   })
 }
