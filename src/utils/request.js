@@ -85,7 +85,7 @@ service.interceptors.response.use(
   },
   error => {
     if(error.response.status===401){
-      alert('请重新登陆')
+      alert('您的会话已过期，请重新登录')
       localStorage.removeItem('ACCESS_TOKEN')
       store.dispatch('user/resetToken').then(() => {
         location.reload()
@@ -103,7 +103,7 @@ service.interceptors.response.use(
     // alert('请重新登陆')
     // console.log('请重新登陆')
     // localStorage.removeItem('ACCESS_TOKEN')
-    
+
     // store.dispatch('user/resetToken').then(() => {
     //   location.reload()
     // })

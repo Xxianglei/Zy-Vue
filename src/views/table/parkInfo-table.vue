@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+
 // 车位信息
-=======
-// 订单信息
->>>>>>> 44e40693da2d3fb62749c2f10429c12fc01487ad
 <template>
   <div class="app-container">
     <div class="filter-container">
@@ -59,52 +56,6 @@
         width="150px">
       </el-table-column>
       <el-table-column
-=======
-        type="selection"
-        width="50px">
-      </el-table-column>
-      <el-table-column
-        prop="name"
-        label="姓名"
-        width="140px">
-      </el-table-column>
-      <el-table-column
-        prop="carNum"
-        label="车牌号"
-        width="95px">
-      </el-table-column>
-      <el-table-column
-        prop="color"
-        label="颜色"
-        width="95px">
-      </el-table-column>
-      <el-table-column
-        prop="createDate"
-        label="创建时间"
-        width="95px">
-      </el-table-column>
-      <el-table-column
-        prop="startDate"
-        label="开始时间"
-        width="150px">
-      </el-table-column>
-      <el-table-column
-        prop="endDate"
-        label="结束时间"
-        width="95px">
-      </el-table-column>
-      <el-table-column
-        prop="parkName"
-        label="车位名称"
-        width="95px">
-      </el-table-column>
-      <el-table-column
-        prop="parkNo"
-        label="车位号"
-        width="95px">
-      </el-table-column>
-      <el-table-column
->>>>>>> 44e40693da2d3fb62749c2f10429c12fc01487ad
         label="操作"
         width="160px">
         <template slot-scope="scope">
@@ -211,11 +162,9 @@
 </style>
 
 <script>
-<<<<<<< HEAD
+
   import {getParkInfoList} from '@/api/user'
-=======
-  import {findOrder} from '@/api/user'
->>>>>>> 44e40693da2d3fb62749c2f10429c12fc01487ad
+
   import axios from 'axios'
   export default{
     data(){
@@ -275,17 +224,10 @@
           password:'',
           superRoot:''
         },
-<<<<<<< HEAD
-       
         formLabelWidth: '80px',
         orderList:[],
         editList:[],
         list:[],
-=======
-        formLabelWidth: '80px',
-        orderList:[],
-        editList:[],
->>>>>>> 44e40693da2d3fb62749c2f10429c12fc01487ad
         thedata:{
           isSuperUser:0,
         },
@@ -295,11 +237,7 @@
 
     },
     created(){
-<<<<<<< HEAD
       this.getList()
-=======
-
->>>>>>> 44e40693da2d3fb62749c2f10429c12fc01487ad
     },
     methods:{
       // 按条件查询订单
@@ -316,15 +254,9 @@
       },
       // 获取数据
       getList(){
-<<<<<<< HEAD
         getParkInfoList(this.$route.query.id).then(resp=>{
         	console.log(resp)
         	this.list=resp.data
- 
-=======
-        findAllUser(this.thedata).then(resp=>{
-          this.list=resp.data
->>>>>>> 44e40693da2d3fb62749c2f10429c12fc01487ad
         })
       },
       // 提交表单的验证

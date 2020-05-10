@@ -8,6 +8,7 @@ export function login(data) {
     data
   })
 }
+
 // 退出
 export function logout() {
   return request({
@@ -15,6 +16,7 @@ export function logout() {
     method: 'post'
   })
 }
+
 // 获取用户信息
 export function getInfo(token) {
   return request({
@@ -23,6 +25,7 @@ export function getInfo(token) {
     params: { token }
   })
 }
+
 // 查询所有用户
 export function findAllUser(data) {
   return request({
@@ -31,6 +34,7 @@ export function findAllUser(data) {
     data
   })
 }
+
 // 查询flowid对应的用户信息
 export function findUser(data) {
   return request({
@@ -39,6 +43,24 @@ export function findUser(data) {
     data
   })
 }
+
+// 查询flowid对应的用户信息
+export function findUserByName(data) {
+  return request({
+    url: '/apigateway/common/manager/findUserByName.json',
+    method: 'post',
+    data
+  })
+}
+
+export function findUserByCondition(data) {
+  return request({
+    url: '/apigateway/common/manager/findUserByCondition.json',
+    method: 'post',
+    data
+  })
+}
+
 // 添加人员
 export function addUser(data) {
   return request({
@@ -47,6 +69,7 @@ export function addUser(data) {
     data
   })
 }
+
 // 按flowid删除人员信息
 export function deleteUser(data) {
   return request({
@@ -55,6 +78,7 @@ export function deleteUser(data) {
     data
   })
 }
+
 // 批量删除
 export function batchDeleteUser(data) {
   return request({
@@ -63,6 +87,7 @@ export function batchDeleteUser(data) {
     data
   })
 }
+
 // 修改用户信息
 export function updateUser(data) {
   return request({
@@ -71,10 +96,11 @@ export function updateUser(data) {
     data
   })
 }
+
 // 查询订单
 export function findOrder(data) {
   return request({
-    url: '/apigateway/pay/back/viewOrder.json?parkName='+data,
+    url: '/apigateway/pay/back/viewOrder.json?parkName=' + data,
     method: 'get'
   })
 }
@@ -100,7 +126,7 @@ export function addPark(data) {
 export function deletePark(data) {
   console.log(data)
   return request({
-    url: '/apigateway/parking/back/deletePark.json?flowId='+data,
+    url: '/apigateway/parking/back/deletePark.json?flowId=' + data,
     method: 'get'
   })
 }
@@ -116,16 +142,9 @@ export function updatePark(data) {
 }
 
 //停车位信息
-<<<<<<< HEAD
 export function getParkInfoList(data) {
   return request({
-    url: '/apigateway/parking/back/getParkInfoList.json?flowId='+data,
-=======
-export function getParkInfoList() {
-  console.log(data)
-  return request({
-    url: '/apigateway/parking/back/getParkInfoList.json',
->>>>>>> 44e40693da2d3fb62749c2f10429c12fc01487ad
+    url: '/apigateway/parking/back/getParkInfoList.json?flowId=' + data,
     method: 'get'
   })
 }

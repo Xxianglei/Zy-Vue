@@ -281,14 +281,9 @@ import axios from 'axios'
         })
       },
       //跳转到车位的页面
-<<<<<<< HEAD
       getParkinfo(row){
         console.log(row.flowId)
         this.$router.push({name:'ParkInfoTable',query:{id:row.flowId}})
-=======
-      getParkinfo(){
-
->>>>>>> 44e40693da2d3fb62749c2f10429c12fc01487ad
       },
       // 提交表单的验证,添加停车场
       submitForm(formName) {
