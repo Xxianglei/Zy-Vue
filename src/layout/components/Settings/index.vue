@@ -60,12 +60,12 @@ export default {
     },
     sidebarLogo: {
       get() {
-        return this.$store.state.settings.sidebarLogo
+        return true
       },
       set(val) {
         this.$store.dispatch('settings/changeSetting', {
           key: 'sidebarLogo',
-          value: val
+          value: true
         })
       }
     }

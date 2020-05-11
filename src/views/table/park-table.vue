@@ -26,7 +26,7 @@
       @row-click="getParkinfo">
       <el-table-column
         prop="parkName"
-        label="停车场名字"
+        label="商圈名称"
         width="160px">
       </el-table-column>
       <el-table-column
@@ -85,7 +85,7 @@
     <el-dialog title="新增停车场" :visible.sync="dialogFormVisible" width="500px" top="30px">
       <!-- 添加新的用户 -->
       <el-form :model="addForm" :rules="rules" ref="addForm" label-width="100px" class="demo-addForm">
-        <el-form-item label="停车场名字" prop="parkName">
+        <el-form-item label="商圈名称" prop="parkName">
           <el-input v-model="addForm.parkName"></el-input>
         </el-form-item>
         <el-form-item label="容量" prop="volume">
@@ -121,7 +121,7 @@
     <el-dialog title="编辑停车场信息" :visible.sync="dialogTableVisible" width="500px" top="30px">
       <!-- 添加新的停车场 -->
       <el-form :model="editForm" :rules="rules" ref="editForm" label-width="100px" class="demo-addForm">
-        <el-form-item label="停车场名字" prop="parkName">
+        <el-form-item label="商圈名称" prop="parkName">
           <el-input v-model="editForm.parkName"></el-input>
         </el-form-item>
         <el-form-item label="容量" prop="volume">
@@ -179,7 +179,9 @@
       </div>
       <div slot="footer" class="dialog-footer" style="margin-top: -25px">
         <el-button type="warning" size="small" icon="el-icon-close" @click="cancelMap">取消</el-button>
-        <el-button type="primary" size="small" icon="el-icon-check" @click="setFormValue(locData.longitude,locData.latitude,locData.address)">保存</el-button>
+        <el-button type="primary" size="small" icon="el-icon-check"
+                   @click="setFormValue(locData.longitude,locData.latitude,locData.address)">保存
+        </el-button>
       </div>
     </el-dialog>
     <!-- 新增的地图 -->
@@ -209,7 +211,9 @@
       </div>
       <div slot="footer" class="dialog-footer" style="margin-top: -25px">
         <el-button type="warning" size="small" icon="el-icon-close" @click="cancelMap">取消</el-button>
-        <el-button type="primary" size="small" icon="el-icon-check" @click="setFormValue1(locData.longitude,locData.latitude,locData.address)">保存</el-button>
+        <el-button type="primary" size="small" icon="el-icon-check"
+                   @click="setFormValue1(locData.longitude,locData.latitude,locData.address)">保存
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -270,32 +274,34 @@
         // 表单验证规则
         rules: {
           parkName: [
-            { required: true, message: '请输入停车场名称', trigger: 'blur' }
+            { required: true, message: '请输入停车场名称', trigger: 'change' }
           ],
           bPrice: [
-            { required: true, message: '请输入价格' }
+            { required: true, message: '请输入价格', trigger: 'change' }
           ],
           vPrice: [
             { required: true, message: '请输入会员价格', trigger: 'change' }
           ],
           yPrice: [
-            { required: true, message: '请输入价格', trigger: 'blur' }
+            { required: true, message: '请输入价格', trigger: 'change' }
           ],
           jd: [
-            { required: true, message: '请输入经度', trigger: 'blur' }
+            { required: true, message: '请输入经度', trigger: 'change' }
           ],
           wd: [
-            { required: true, message: '请输入维度', trigger: 'blur' }
-          ], location: [
-            { required: true, message: '请输入地址', trigger: 'blur' }
-          ], volume: [
-            { required: true, message: '请输入容量', trigger: 'blur' }
+            { required: true, message: '请输入维度', trigger: 'change' }
+          ],
+          location: [
+            { required: true,message: '请输入地址', trigger: 'change' }
+          ],
+          volume: [
+            { required: true, message: '请输入容量', trigger: 'change' }
           ]
         },
         dialogTableVisible: false,
         dialogFormVisible: false,
         dialogMapVisible: false,
-        dialogMapVisible1:false,
+        dialogMapVisible1: false,
         formLabelWidth: '100px',
         list: [],
         parkName: ''
@@ -343,29 +349,29 @@
         this.locData.longitude = point.point.lng
         this.locData.latitude = point.point.lat
       },
-      setFormValue(lng,lat,addr) {
+      setFormValue(lng, lat, addr) {
         this.$emit('findlocdata', this.locData)
-        this.editForm.wd=lat;
-        this.editForm.jd=lng;
-        this.editForm.location=addr;
+        this.editForm.wd = lat
+        this.editForm.jd = lng
+        this.editForm.location = addr
         this.mapNoShow()
       },
-      setFormValue1(lng,lat,addr) {
+      setFormValue1(lng, lat, addr) {
         this.$emit('findlocdata', this.locData)
-        this.addForm.wd=lat;
-        this.addForm.jd=lng;
-        this.addForm.location=addr;
+        this.addForm.wd = lat
+        this.addForm.jd = lng
+        this.addForm.location = addr
         this.mapNoShow1()
       },
       mapNoShow() {
         this.mapVisible = false
-        this.dialogMapVisible=false
-        this.dialogTableVisible=true;
+        this.dialogMapVisible = false
+        this.dialogTableVisible = true
       },
       mapNoShow1() {
         this.mapVisible = false
-        this.dialogMapVisible1=false
-        this.dialogFormVisible=true;
+        this.dialogMapVisible1 = false
+        this.dialogFormVisible = true
       },
       tableRowClassName({ row, rowIndex }) {
         if (rowIndex % 2 === 1) {
@@ -418,7 +424,7 @@
             addPark(
               this.addForm
             ).then(resp => {
-              if (resp.code === 200) {
+              if (resp.code == 200) {
                 this.dialogFormVisible = false,
                   this.getList(),
                   this.$message({
@@ -486,15 +492,15 @@
           })
       },
       cancelMap() {
-        this.dialogMapVisible=false,
-        this.mapVisible = false,
+        this.dialogMapVisible = false,
+          this.mapVisible = false,
           this.$message({
             type: 'info',
             message: '已取消'
           })
       }, formatVip(row, column) {
         var vip = row.vPrice
-        vip = vip * 100
+        vip = vip * 10
         return vip + '折'
       },
       SearchParksByName(parkName) {

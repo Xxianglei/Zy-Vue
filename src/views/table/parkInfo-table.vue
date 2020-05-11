@@ -131,7 +131,6 @@
       // 获取数据
       getList() {
         getParkInfoList(this.$route.query.id).then(resp => {
-          this.parkId = resp.data.parkId
           this.list = resp.data
         })
       },

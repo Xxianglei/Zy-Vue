@@ -6,6 +6,7 @@
 import echarts from 'echarts'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
+import { getOrderNumsEveryHour } from '@/api/count'
 
 export default {
   mixins: [resize],
@@ -44,6 +45,9 @@ export default {
       }
     }
   },
+  created(){
+	this.getNumber()
+  },
   mounted() {
     this.$nextTick(() => {
       this.initChart()
@@ -57,81 +61,110 @@ export default {
     this.chart = null
   },
   methods: {
+  	getNumber(){
+  		getOrderNumsEveryHour().then(res=>{
+
+  			var getData=[];
+//  			先进行赋值
+				for(let i=0; i<res.data.length; i++) {
+					getData.push(res.data[i].nums)
+				}
+//			console.log(expectedData)
+  			this.chart.setOption({
+  				series:[{
+  					data:getData
+  				}]
+  			})
+  		})
+  	},
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
+
     },
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
-        xAxis: {
-          data: ['00:00',
-            '01:00',
-            '02:00',
-            '03:00',
-            '04:00',
-            '05:00',
-            '06:00',
-            '07:00',
-            '08:00',
-            '09:00',
-            '10:00',
-            '11:00',
-            '12:00',
-            '13:00',
-            '14:00',
-            '15:00',
-            '16:00',
-            '17:00',
-            '18:00',
-            '19:00',
-            '20:00',
-            '21:00',
-            '22:00',
-            '23:00',
-            '24:00'],
-          boundaryGap: false,
-          axisTick: {
-            show: false
-          }
-        },
-        grid: {
-          left: 10,
-          right: 10,
-          bottom: 20,
-          top: 30,
-          containLabel: true
-        },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross'
-          },
-          padding: [5, 10]
-        },
-        yAxis: {
-          axisTick: {
-            show: false
-          }
-        },
-        legend: {
-          data: ['订单量']
-        },
-        series: [{
-          name: '订单量', itemStyle: {
-            normal: {
-              color: '#5aa9ee',
-              lineStyle: {
-                color: '#5aa9ee',
-                width: 2
-              }
-            }
-          },
-          smooth: true,
-          type: 'line',
-          data: expectedData,
-          animationDuration: 2800,
-          animationEasing: 'cubicInOut'
-        }]
+        title: {
+        text: '各个时段订单',
+//      subtext: '纯属虚构'
+		    },
+		    tooltip: {
+		        trigger: 'axis',
+		        axisPointer: {
+		            type: 'cross'
+		        }
+		    },
+		    toolbox: {
+		        show: true,
+		        feature: {
+		            saveAsImage: {}
+		        }
+		    },
+		    xAxis: {
+		        type: 'category',
+		        boundaryGap: false,
+		        data: [
+		        	'00:00', 
+		        	'01:00', 
+		        	'02:00', 
+		        	'03:00', 
+		        	'05:00', 
+		        	'06:00', 
+		        	'07:00', 
+		        	'08:00', 
+		        	'10:00', 
+		        	'11:00', 
+		        	'12:30', 
+		        	'13:00', 
+		        	'15:00', 
+		        	'16:00', 
+		        	'17:00', 
+		        	'18:00', 
+		        	'20:00', 
+		        	'21:00', 
+		        	'22:00', 
+		        	'23:00']
+		    },
+		    yAxis: {
+		        type: 'value',
+		        axisLabel: {
+		            formatter: '{value} '
+		        },
+		        axisPointer: {
+		            snap: true
+		        }
+		    },
+		    visualMap: {
+		        show: false,
+		        dimension: 0,
+		        pieces: [{
+		            lte: 6,
+		            color: '#36a3f7'
+		        }, {
+		            gt: 6,
+		            lte: 8,
+		            color: '#f4516c'
+		        }, {
+		            gt: 8,
+		            lte: 14,
+		            color: '#36a3f7'
+		        }, {
+		            gt: 14,
+		            lte: 17,
+		            color: '#f4516c'
+		        }, {
+		            gt: 17,
+		            color: '#36a3f7'
+		        }]
+		    },
+		    series: [
+		        {
+		            name: '订单量',
+		            type: 'line',
+		            smooth: true,
+		            data: []
+		        }
+		    ]
       })
     }
   }

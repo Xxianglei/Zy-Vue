@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  name: 'App'
+  name: '商圈车位管理系统'
 }
 </script>

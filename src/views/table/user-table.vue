@@ -272,7 +272,7 @@
   }
 
   .el-table .success-row {
-    background: #f0f9eb;
+    background: #efefef;
   }
 
   .el-table {
@@ -413,7 +413,7 @@
 
     methods: {
       tableRowClassName({ row, rowIndex }) {
-        if (rowIndex % 2 === 1) {
+        if (  row.status == '1') {
           return 'success-row'
         }
         return ''
@@ -653,7 +653,7 @@
       }
       ,   // 在线格式化
       showOnline(row, column) {
-        return row.status == 1 ? '在线' : row.sexy == 0 ? '不在线' : '未知'
+        return row.status == 1 ? '在线' : '不在线'
       }
     }
   }

@@ -5,6 +5,7 @@
 <script>
 import echarts from 'echarts'
 import resize from './mixins/resize'
+import { getLast10DayOrderNums } from '@/api/count'
 
 export default {
   mixins: [resize],
@@ -31,6 +32,9 @@ export default {
       chart: null
     }
   },
+  created(){
+  	this.getNumber()
+  },
   mounted() {
     this.initChart()
   },
@@ -42,6 +46,89 @@ export default {
     this.chart = null
   },
   methods: {
+  	getNumber(){
+  		getLast10DayOrderNums().then(res=>{
+
+  			var getManOrder = [];
+  			var womanOrder = [];
+  			var sumOrder= [];
+  			
+				//先进行赋值
+				for(let i=0; i<res.data.length; i++) {
+					getManOrder.push(res.data[i].manOrder)
+					womanOrder.push(res.data[i].womanOrder)
+					sumOrder.push(res.data[i].sumOrder)
+				}
+//				console.log(getManOrder)
+				this.chart.setOption({
+					series: [{
+          name: '男性',
+          type: 'bar',
+          stack: 'total',
+          barMaxWidth: 35,
+          barGap: '10%',
+          itemStyle: {
+            normal: {
+              color: 'rgba(255,144,128,1)',
+              label: {
+                show: true,
+                textStyle: {
+                  color: '#fff'
+                },
+                position: 'insideTop',
+                formatter(p) {
+                  return p.value > 0 ? p.value : ''
+                }
+              }
+            }
+          },
+          data: getManOrder
+        },
+
+        {
+          name: '女性',
+          type: 'bar',
+          stack: 'total',
+          itemStyle: {
+            normal: {
+              color: 'rgba(0,191,183,1)',
+              barBorderRadius: 0,
+              label: {
+                show: true,
+                position: 'top',
+                formatter(p) {
+                  return p.value > 0 ? p.value : ''
+                }
+              }
+            }
+          },
+          data: womanOrder
+        }, {
+          name: '总量',
+          type: 'line',
+          stack: 'total',
+          symbolSize: 10,
+          symbol: 'circle',
+          itemStyle: {
+            normal: {
+              color: 'rgba(252,230,48,1)',
+              barBorderRadius: 0,
+              label: {
+                show: true,
+                position: 'top',
+                formatter(p) {
+                  return p.value > 0 ? p.value : ''
+                }
+              }
+            }
+          },
+          data:sumOrder
+        }
+        ]
+				})
+
+  		})
+  	},
     initChart() {
       this.chart = echarts.init(document.getElementById(this.id))
       const xData = (function() {
@@ -160,110 +247,7 @@ export default {
           height: 15,
           start: 1,
           end: 35
-        }],
-        series: [{
-          name: '男性',
-          type: 'bar',
-          stack: 'total',
-          barMaxWidth: 35,
-          barGap: '10%',
-          itemStyle: {
-            normal: {
-              color: 'rgba(255,144,128,1)',
-              label: {
-                show: true,
-                textStyle: {
-                  color: '#fff'
-                },
-                position: 'insideTop',
-                formatter(p) {
-                  return p.value > 0 ? p.value : ''
-                }
-              }
-            }
-          },
-          data: [
-            709,
-            1917,
-            2455,
-            2610,
-            1719,
-            1433,
-            1544,
-            3285,
-            5208,
-            3372,
-            2484,
-            4078
-          ]
-        },
-
-        {
-          name: '女性',
-          type: 'bar',
-          stack: 'total',
-          itemStyle: {
-            normal: {
-              color: 'rgba(0,191,183,1)',
-              barBorderRadius: 0,
-              label: {
-                show: true,
-                position: 'top',
-                formatter(p) {
-                  return p.value > 0 ? p.value : ''
-                }
-              }
-            }
-          },
-          data: [
-            327,
-            1776,
-            507,
-            1200,
-            800,
-            482,
-            204,
-            1390,
-            1001,
-            951,
-            381,
-            220
-          ]
-        }, {
-          name: '总量',
-          type: 'line',
-          stack: 'total',
-          symbolSize: 10,
-          symbol: 'circle',
-          itemStyle: {
-            normal: {
-              color: 'rgba(252,230,48,1)',
-              barBorderRadius: 0,
-              label: {
-                show: true,
-                position: 'top',
-                formatter(p) {
-                  return p.value > 0 ? p.value : ''
-                }
-              }
-            }
-          },
-          data: [
-            1036,
-            3693,
-            2962,
-            3810,
-            2519,
-            1915,
-            1748,
-            4675,
-            6209,
-            4323,
-            2865,
-            4298
-          ]
-        }
-        ]
+        }]
       })
     }
   }

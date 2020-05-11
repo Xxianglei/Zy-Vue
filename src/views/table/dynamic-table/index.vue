@@ -95,11 +95,11 @@
 
 <style>
   .el-table .warning-row {
-    background: #ff6a7a;
+    background: #ffc9cc;
   }
 
   .el-table .success-row {
-    background: #7ffd9d;
+    background: #c0fcd0;
   }
 
   .el-table {

@@ -7,6 +7,7 @@
 
   require('echarts/theme/macarons') // echarts theme
   import resize from './mixins/resize'
+  import { getParkUseCount } from '@/api/count'
 
   export default {
     mixins: [resize],
@@ -28,6 +29,9 @@
       return {
         chart: null
       }
+    },
+    created(){
+    	this.getNumber()
     },
     mounted() {
       this.$nextTick(() => {
@@ -63,14 +67,28 @@
               radius: [15, 95],
               center: ['50%', '45%'],
               data: [
-                { value: 320, name: '剩余量' },
-                { value: 240, name: '使用量' }
               ],
               animationEasing: 'cubicInOut',
               animationDuration: 2600
             }
           ]
         })
+      },
+      getNumber(){
+      	getParkUseCount().then(resp=>{
+      		console.log(resp)
+      		var getData=[];
+      		getData.push({value:resp.data.noInUseCount,name:'剩余量'})
+      		getData.push({value:resp.data.inUseCount,name:'使用量'})
+      		
+	        this.chart.setOption({
+	  				series:[{
+							data:getData
+	  				}]
+	  			})
+	      		
+      		
+      	})
       }
     }
   }

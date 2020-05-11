@@ -9,7 +9,7 @@
           <div class="card-panel-text">
             用户量
           </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="userCount" :duration="2600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -22,7 +22,7 @@
           <div class="card-panel-text">
             会员数
           </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="vipCount" :duration="3000" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -35,7 +35,7 @@
           <div class="card-panel-text">
             停车场
           </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="parkCount" :duration="3200" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -48,7 +48,7 @@
           <div class="card-panel-text">
             订单数
           </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <count-to :start-val="0" :end-val="orderCount" :duration="3600" class="card-panel-num" />
         </div>
       </div>
     </el-col>
@@ -56,16 +56,43 @@
 </template>
 
 <script>
+//	var vipCount=0
 import CountTo from 'vue-count-to'
+import { dashboard } from '@/api/count'
 
 export default {
   components: {
     CountTo
   },
-  methods: {
-    handleSetLineChartData(type) {
-      this.$emit('handleSetLineChartData', type)
+
+  data() {
+    return {
+      thedata: {
+        isSuperUser: ''
+	   },
+	    orderCount: 0,
+	    userCount: 0,
+	    parkCount: 0,
+	    vipCount: 0
     }
+  },
+  created() {
+    this.getNumber()
+  },
+  methods: {
+//  handleSetLineChartData(type) {
+//    this.$emit('handleSetLineChartData', type)
+//  },
+    	// 获取用户数量
+    	getNumber() {
+    		dashboard().then(resp => {
+    			this.orderCount = resp.data.orderCount
+    			this.userCount = resp.data.userCount
+    			this.parkCount = resp.data.parkCount
+    			this.vipCount = resp.data.vipCount
+    		})
+    	}
+
   }
 }
 </script>
