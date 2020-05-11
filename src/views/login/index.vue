@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm"  class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">基于SpringCloud微服务框架的商圈车位管理系统</h3>
       </div>
 
       <el-form-item prop="account">
@@ -44,22 +44,7 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-      <!-- <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click="ceshia">ceshi</el-button> -->
-      <div style="position:relative">
-        <div class="tips">
-          <span>account : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">account : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
-      </div>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录后台</el-button>
     </el-form>
 
     <el-dialog title="Or connect with" :visible.sync="showDialog">
