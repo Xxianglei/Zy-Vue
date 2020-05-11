@@ -95,11 +95,11 @@
 
 <style>
   .el-table .warning-row {
-    background: oldlace;
+    background: #ff6a7a;
   }
 
   .el-table .success-row {
-    background: #f0f9eb;
+    background: #7ffd9d;
   }
 
   .el-table {
@@ -115,6 +115,7 @@
 <script>
   import { deleteOrder, findOrder } from '@/api/user'
   import axios from 'axios'
+
   export default {
     data() {
       return {
@@ -142,8 +143,11 @@
         })
       },
       tableRowClassName({ row, rowIndex }) {
-        if (rowIndex % 2 === 1) {
+        if (row.charge == 1) {
           return 'success-row'
+        }
+        if (row.charge == 2) {
+          return 'warning-row'
         }
         return ''
       },
@@ -184,7 +188,7 @@
           type: 'warning'
         }).then(() => {
           rows.splice(index, 1)
-          deleteOrder( id ).then(resp => {
+          deleteOrder(id).then(resp => {
             if (resp.data === 1) {
               this.$message({
                 message: '删除成功',
