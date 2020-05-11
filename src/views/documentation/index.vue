@@ -1,6 +1,6 @@
 <template>
   <div>
-    <iframe src="http://106.54.75.24:9999/" id="mobsf" frameborder="0" scrolling="auto"></iframe>
+    <iframe src="http://106.54.75.24:9999/#/wallboard" id="mobsf" frameborder="0" scrolling="auto"></iframe>
   </div>
 </template>
 
