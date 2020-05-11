@@ -90,8 +90,8 @@ export const constantRoutes = [
       {
         path: 'index',
         component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
+        name: '集群监控管理',
+        meta: { title: '集群监控管理', icon: 'documentation', affix: true }
       }
     ]
   },

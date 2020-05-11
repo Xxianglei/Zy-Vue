@@ -8,7 +8,7 @@
         <div style="margin-bottom:50px;">
           <el-col :span="4" class="text-center">
             <router-link class="pan-btn blue-btn" to="/documentation/index">
-              Documentation
+              集群监控管理
             </router-link>
           </el-col>
           <el-col :span="4" class="text-center">
