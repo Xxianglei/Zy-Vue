@@ -84,7 +84,7 @@ export default {
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
         title: {
-          text: '各个时段订单'
+          text: '各时段用户下单量'
           //      subtext: '纯属虚构'
         },
         tooltip: {

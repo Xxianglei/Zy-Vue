@@ -125,7 +125,7 @@
           <el-input v-model="addForm.wd" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="dialogMapVisible1= true,dialogFormVisible=false">打开地图</el-button>
+          <el-button type="primary" @click="dialogMapVisible= true,dialogFormVisible=false">打开地图</el-button>
           <el-button type="primary" @click="submitForm('addForm')">立即添加</el-button>
           <el-button @click="resetForm('addForm')">重置</el-button>
         </el-form-item>
@@ -161,7 +161,7 @@
           <el-input id="wd" v-model="editForm.wd" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="dialogMapVisible= true,dialogTableVisible=false">打开地图</el-button>
+          <el-button type="primary" @click="dialogMapVisible1= true,dialogTableVisible=false">打开地图</el-button>
           <el-button type="primary" @click="editPark('editForm')">立即修改</el-button>
           <el-button @click="cancelButton('editForm')">取消</el-button>
         </el-form-item>
@@ -170,73 +170,6 @@
     <!-- 编辑的表单 -->
     <el-dialog
       id="mapDialog"
-      title="停车场地址设置"
-      :visible.sync="dialogMapVisible"
-      width="800px"
-      top="0px"
-      :close-on-click-modal="false"
-    >
-      <baidu-map
-        class="map"
-        :center="center"
-        :zoom="zoom"
-        :scroll-wheel-zoom="true"
-        ak="tZBFWj3pOiWw4FcSjjsNSKAsPcpfh19V"
-        @ready="handler"
-        @click="clickEvent"
-      >
-        <!--  //地图控件位置-->
-        <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT" />
-        <!--  //城市列表-->
-        <bm-city-list anchor="BMAP_ANCHOR_TOP_LEFT" />
-        <!--  //定位当前位置-->
-        <bm-geolocation
-          anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
-          :show-address-bar="true"
-          :auto-location="true"
-          @locationSuccess="getLoctionSuccess"
-        />
-        <!--   //地图容器-->
-        <bm-view :style="{width:'100%',height: '575px',flex: 1,marginBottom:'-30px'}" />
-      </baidu-map>
-      <div class="demo-input-suffix">
-        <el-input
-          v-model.number="locData.longitude"
-          class="lineinput"
-          style="width:200px"
-          size="mini"
-          placeholder="经度"
-        />
-        <el-input
-          v-model.number="locData.latitude"
-          class="lineinput"
-          style="width:200px"
-          size="mini"
-          placeholder="纬度"
-        />
-        <el-input
-          v-model="locData.address"
-          class="lineinput"
-          style="width:200px"
-          size="mini"
-          placeholder="详细地址"
-          name="address_detail"
-          @input="findAddress(locData.address)"
-        />
-      </div>
-      <div slot="footer" class="dialog-footer" style="margin-top: -25px">
-        <el-button type="warning" size="small" icon="el-icon-close" @click="cancelMap">取消</el-button>
-        <el-button
-          type="primary"
-          size="small"
-          icon="el-icon-check"
-          @click="setFormValue(locData.longitude,locData.latitude,locData.address)"
-        >保存
-        </el-button>
-      </div>
-    </el-dialog>
-    <!-- 新增的地图 -->
-    <el-dialog
       title="停车场地址设置"
       :visible.sync="dialogMapVisible1"
       width="800px"
@@ -298,6 +231,73 @@
           size="small"
           icon="el-icon-check"
           @click="setFormValue1(locData.longitude,locData.latitude,locData.address)"
+        >保存
+        </el-button>
+      </div>
+    </el-dialog>
+    <!-- 新增的地图 -->
+    <el-dialog
+      title="停车场地址设置"
+      :visible.sync="dialogMapVisible"
+      width="800px"
+      top="0px"
+      :close-on-click-modal="false"
+    >
+      <baidu-map
+        class="map"
+        :center="center"
+        :zoom="zoom"
+        :scroll-wheel-zoom="true"
+        ak="tZBFWj3pOiWw4FcSjjsNSKAsPcpfh19V"
+        @ready="handler"
+        @click="clickEvent"
+      >
+        <!--  //地图控件位置-->
+        <bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT" />
+        <!--  //城市列表-->
+        <bm-city-list anchor="BMAP_ANCHOR_TOP_LEFT" />
+        <!--  //定位当前位置-->
+        <bm-geolocation
+          anchor="BMAP_ANCHOR_BOTTOM_RIGHT"
+          :show-address-bar="true"
+          :auto-location="true"
+          @locationSuccess="getLoctionSuccess"
+        />
+        <!--   //地图容器-->
+        <bm-view :style="{width:'100%',height: '575px',flex: 1,marginBottom:'-30px'}" />
+      </baidu-map>
+      <div class="demo-input-suffix">
+        <el-input
+          v-model.number="locData.longitude"
+          class="lineinput"
+          style="width:200px"
+          size="mini"
+          placeholder="经度"
+        />
+        <el-input
+          v-model.number="locData.latitude"
+          class="lineinput"
+          style="width:200px"
+          size="mini"
+          placeholder="纬度"
+        />
+        <el-input
+          v-model="locData.address"
+          class="lineinput"
+          style="width:200px"
+          size="mini"
+          placeholder="详细地址"
+          name="address_detail"
+          @input="findAddress(locData.address)"
+        />
+      </div>
+      <div slot="footer" class="dialog-footer" style="margin-top: -25px">
+        <el-button type="warning" size="small" icon="el-icon-close" @click="cancelMap">取消</el-button>
+        <el-button
+          type="primary"
+          size="small"
+          icon="el-icon-check"
+          @click="setFormValue(locData.longitude,locData.latitude,locData.address)"
         >保存
         </el-button>
       </div>
@@ -435,28 +435,30 @@ export default {
       this.locData.longitude = point.point.lng
       this.locData.latitude = point.point.lat
     },
-    setFormValue(lng, lat, addr) {
+    setFormValue1(lng, lat, addr) {
       this.$emit('findlocdata', this.locData)
       this.editForm.wd = lat
       this.editForm.jd = lng
       this.editForm.location = addr
-      this.mapNoShow()
+      this.mapNoShow1()
     },
-    setFormValue1(lng, lat, addr) {
+    setFormValue(lng, lat, addr) {
       this.$emit('findlocdata', this.locData)
       this.addForm.wd = lat
       this.addForm.jd = lng
       this.addForm.location = addr
-      this.mapNoShow1()
+      this.mapNoShow()
     },
-    mapNoShow() {
-      this.mapVisible = false
-      this.dialogMapVisible = false
-      this.dialogTableVisible = true
-    },
+    // 编辑
     mapNoShow1() {
       this.mapVisible = false
       this.dialogMapVisible1 = false
+      this.dialogTableVisible = true
+    },
+    // 新增
+    mapNoShow() {
+      this.mapVisible = false
+      this.dialogMapVisible = false
       this.dialogFormVisible = true
     },
     tableRowClassName({ row, rowIndex }) {
