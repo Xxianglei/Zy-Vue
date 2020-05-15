@@ -31,7 +31,7 @@ export default {
       chart: null
     }
   },
-  created(){
+  created() {
   	this.getNumber()
   },
   mounted() {
@@ -46,27 +46,27 @@ export default {
     this.chart.dispose()
     this.chart = null
   },
-  
-  methods: { 
-  	getNumber(){
-  		getParkTop10().then(resp=>{
-				console.log(resp)
-				var getData=[];
-				var getNums=[];
-				for (var i = 0; i < resp.data.length; i++) {
+
+  methods: {
+  	getNumber() {
+  		getParkTop10().then(resp => {
+        console.log(resp)
+        // 停车场名字
+        var getData = []
+        // 停车场销量
+        var getNums = []
+        for (var i = 0; i < resp.data.length; i++) {
 			    getData.push(resp.data[i].parkName)
 			    getNums.push(resp.data[i].nums)
-				}
+        }
 			 this.chart.setOption({
-  				xAxis:[{
-						data:getData
+  				xAxis: [{
+            data: getData
   				}],
-  				series:[{
-  					data:getNums
+  				series: [{
+  					data: getNums
   				}]
-  				
   			})
-  			
   		})
   	},
     initChart() {
@@ -75,8 +75,8 @@ export default {
   		 	 color: ['#3398DB'],
 			    tooltip: {
 			        trigger: 'axis',
-			        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-			            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        axisPointer: { // 坐标轴指示器，坐标轴触发有效
+			            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
 			        }
 			    },
 			    grid: {
@@ -101,16 +101,13 @@ export default {
 			    ],
 			    series: [
 			        {
-			            name: '销量',
+			            name: '总销量',
 			            type: 'bar',
 			            barWidth: '60%',
 			            data: []
 			        }
 			    ]
   		 })
-    	
-      
-	      
     }
   }
 }

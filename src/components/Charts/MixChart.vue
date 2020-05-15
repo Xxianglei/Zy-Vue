@@ -32,7 +32,7 @@ export default {
       chart: null
     }
   },
-  created(){
+  created() {
   	this.getNumber()
   },
   mounted() {
@@ -46,93 +46,102 @@ export default {
     this.chart = null
   },
   methods: {
-  	getNumber(){
-  		getLast10DayOrderNums().then(res=>{
+    howManyDay: [{
+      value: '',
+      label: '空'
+    }, {
+      value: '0',
+      label: '会员'
+    }, {
+      value: '1',
+      label: '普通'
+    }],
+  	getNumber() {
+  		getLast10DayOrderNums().then(res => {
+  			var getManOrder = []
+  			var womanOrder = []
+  			var sumOrder = []
 
-  			var getManOrder = [];
-  			var womanOrder = [];
-  			var sumOrder= [];
-  			
-				//先进行赋值
-				for(let i=0; i<res.data.length; i++) {
-					getManOrder.push(res.data[i].manOrder)
-					womanOrder.push(res.data[i].womanOrder)
-					sumOrder.push(res.data[i].sumOrder)
-				}
-//				console.log(getManOrder)
-				this.chart.setOption({
-					series: [{
-          name: '男性',
-          type: 'bar',
-          stack: 'total',
-          barMaxWidth: 35,
-          barGap: '10%',
-          itemStyle: {
-            normal: {
-              color: 'rgba(255,144,128,1)',
-              label: {
-                show: true,
-                textStyle: {
-                  color: '#fff'
-                },
-                position: 'insideTop',
-                formatter(p) {
-                  return p.value > 0 ? p.value : ''
-                }
-              }
-            }
-          },
-          data: getManOrder
-        },
-
-        {
-          name: '女性',
-          type: 'bar',
-          stack: 'total',
-          itemStyle: {
-            normal: {
-              color: 'rgba(0,191,183,1)',
-              barBorderRadius: 0,
-              label: {
-                show: true,
-                position: 'top',
-                formatter(p) {
-                  return p.value > 0 ? p.value : ''
-                }
-              }
-            }
-          },
-          data: womanOrder
-        }, {
-          name: '总量',
-          type: 'line',
-          stack: 'total',
-          symbolSize: 10,
-          symbol: 'circle',
-          itemStyle: {
-            normal: {
-              color: 'rgba(252,230,48,1)',
-              barBorderRadius: 0,
-              label: {
-                show: true,
-                position: 'top',
-                formatter(p) {
-                  return p.value > 0 ? p.value : ''
-                }
-              }
-            }
-          },
-          data:sumOrder
+        // 先进行赋值
+        for (let i = 0; i < res.data.length; i++) {
+          getManOrder.push(res.data[i].manOrder)
+          womanOrder.push(res.data[i].womanOrder)
+          sumOrder.push(res.data[i].sumOrder)
         }
-        ]
-				})
+        //				console.log(getManOrder)
+        this.chart.setOption({
+          series: [{
+            name: '男性',
+            type: 'bar',
+            stack: 'total',
+            barMaxWidth: 35,
+            barGap: '10%',
+            itemStyle: {
+              normal: {
+                color: 'rgba(255,144,128,1)',
+                label: {
+                  show: true,
+                  textStyle: {
+                    color: '#fff'
+                  },
+                  position: 'insideTop',
+                  formatter(p) {
+                    return p.value > 0 ? p.value : ''
+                  }
+                }
+              }
+            },
+            data: getManOrder
+          },
 
+          {
+            name: '女性',
+            type: 'bar',
+            stack: 'total',
+            itemStyle: {
+              normal: {
+                color: 'rgba(0,191,183,1)',
+                barBorderRadius: 0,
+                label: {
+                  show: true,
+                  position: 'top',
+                  formatter(p) {
+                    return p.value > 0 ? p.value : ''
+                  }
+                }
+              }
+            },
+            data: womanOrder
+          }, {
+            name: '总量',
+            type: 'line',
+            stack: 'total',
+            symbolSize: 10,
+            symbol: 'circle',
+            itemStyle: {
+              normal: {
+                color: 'rgba(252,230,48,1)',
+                barBorderRadius: 0,
+                label: {
+                  show: true,
+                  position: 'top',
+                  formatter(p) {
+                    return p.value > 0 ? p.value : ''
+                  }
+                }
+              }
+            },
+            data: sumOrder
+          }
+          ]
+        })
   		})
   	},
     initChart() {
       this.chart = echarts.init(document.getElementById(this.id))
       const xData = (function() {
         const data = []
+        // todo  设置可以选择天数那种 10 30 90 120 360
         for (let i = 1; i < 11; i++) {
           data.push(i + 'Day')
         }

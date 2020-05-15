@@ -80,7 +80,7 @@ export const constantRoutes = [
       }
     ]
   },
-  //表数据
+  // 表数据
   {
     path: '/user-table',
     component: Layout,
@@ -89,10 +89,10 @@ export const constantRoutes = [
         path: 'user-table',
         component: () => import('@/views/table/user-table'),
         name: 'UserTable',
-        meta: { title: '用户信息' ,icon:'people'}
-      },
+        meta: { title: '用户信息', icon: 'people' }
+      }
     ]
-  },  {
+  }, {
     path: '/park-table',
     component: Layout,
     children: [
@@ -100,8 +100,8 @@ export const constantRoutes = [
         path: 'park-table',
         component: () => import('@/views/table/park-table'),
         name: 'ParkTable',
-        meta: { title: '商圈信息' ,icon:'fullscreen'}
-      },
+        meta: { title: '商圈信息', icon: 'fullscreen' }
+      }
     ]
   },
   {
@@ -112,11 +112,11 @@ export const constantRoutes = [
         path: 'dynamic-table',
         component: () => import('@/views/table/dynamic-table/index'),
         name: 'DynamicTable',
-        meta: { title: '订单管理' ,icon:'money' }
-      },
+        meta: { title: '订单管理', icon: 'money' }
+      }
     ]
   },
-//	折线表
+  //	折线表
   {
     path: '/mix-chart',
     component: Layout,
@@ -125,18 +125,18 @@ export const constantRoutes = [
         path: 'mix-chart',
         component: () => import('@/views/charts/mix-chart'),
         name: 'MixChart',
-        meta: { title: '订单分析', icon:'shopping', noCache: true }
+        meta: { title: '订单分析', icon: 'shopping', noCache: true }
       }
     ]
-  },{
+  }, {
     path: '/documentation',
     component: Layout,
     children: [
       {
         path: 'index',
         component: () => import('@/views/documentation/index'),
-        name: '集群监控',
-        meta: { title: '集群监控', icon: 'documentation', affix: true }
+        name: '服务监控',
+        meta: { title: '服务监控', icon: 'documentation', affix: true }
       }
     ]
   }
