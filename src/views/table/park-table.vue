@@ -27,6 +27,7 @@
       :row-class-name="tableRowClassName"
       @row-click="getParkinfo"
     >
+      <img id="pic1">
       <el-table-column
         prop="parkName"
         label="商圈名称"
@@ -46,12 +47,12 @@
       <el-table-column
         prop="jd"
         label="经度"
-        width="160px"
+        width="150px"
       />
       <el-table-column
         prop="wd"
         label="纬度"
-        width="160px"
+        width="150px"
       />
       <el-table-column
         prop="bPrice"
@@ -75,6 +76,11 @@
         width="140px"
       />
       <el-table-column
+        v-if="false"
+        prop="images"
+        width="0px"
+      />
+      <el-table-column
         label="操作"
         width="160px"
       >
@@ -91,6 +97,12 @@
             icon="el-icon-delete"
             circle
             @click.native.prevent="deleteRow(scope.$index, list,scope.row.flowId)"
+          />
+          <el-button
+            type="danger"
+            icon="el-icon-download"
+            circle
+            @click.native.prevent="downloadImages(scope.$index, list,scope.row.images,list,scope.row.parkName)"
           />
         </template>
       </el-table-column>
@@ -556,6 +568,29 @@ export default {
           message: '已取消删除'
         })
       })
+      // 下载图片
+    }, downloadImages(index, rows, images, parkName) {
+      event.stopPropagation()
+      this.$confirm('此操作将下载该停车场的二维码, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        if (images == null || images == '') {
+          this.$message({
+            type: 'error',
+            message: '二维码不存在'
+          })
+        } else {
+          document.getElementById('pic1').src = 'data:image/jpg;base64,' + images
+          download(images, parkName)
+        }
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消下载'
+        })
+      })
     },
     handleEdit(index, row) {
       this.dialogTableVisible = true,
@@ -619,6 +654,35 @@ export default {
 
 }
 
+// 下载图片
+function download(images, parkName) {
+  const imgData = 'data:image/jpg;base64,' + images
+  downloadFile('该停车场的二维码.png', imgData)
+}
+
+// 下载
+function downloadFile(fileName, content) {
+  const aLink = document.createElement('a')
+  const blob = base64ToBlob(content) // new Blob([content]);
+  const evt = document.createEvent('HTMLEvents')
+  evt.initEvent('click', true, true)// initEvent 不加后两个参数在FF下会报错  事件类型，是否冒泡，是否阻止浏览器的默认行为
+  aLink.download = fileName
+  aLink.href = URL.createObjectURL(blob)
+  aLink.click()
+}
+
+// base64转blob
+function base64ToBlob(code) {
+  const parts = code.split(';base64,')
+  const contentType = parts[0].split(':')[1]
+  const raw = window.atob(parts[1])
+  const rawLength = raw.length
+  const uInt8Array = new Uint8Array(rawLength)
+  for (let i = 0; i < rawLength; ++i) {
+    uInt8Array[i] = raw.charCodeAt(i)
+  }
+  return new Blob([uInt8Array], { type: contentType })
+}
 </script>
 <style scoped>
   #allmap {
