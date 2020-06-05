@@ -69,7 +69,6 @@ export default {
         for (let i = 0; i < res.data.length; i++) {
           getData.push(res.data[i].nums)
         }
-        //			console.log(expectedData)
         this.chart.setOption({
           series: [{
             data: getData
@@ -81,11 +80,10 @@ export default {
       this.chart = echarts.init(this.$el, 'macarons')
       this.setOptions(this.chartData)
     },
-    setOptions({ expectedData, actualData } = {}) {
+    setOptions({ actualData } = {}) {
       this.chart.setOption({
         title: {
           text: '各时段用户下单量'
-          //      subtext: '纯属虚构'
         },
         tooltip: {
           trigger: 'axis',
